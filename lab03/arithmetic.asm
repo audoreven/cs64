@@ -16,7 +16,7 @@ main:
 	
 	# calculate
 	sub $t3, $t1, $t2
-	sll $t1, $t3, 6
+	sll $t1, $t3, 7
 	add $t2, $t1, 32
 	
 	# print answer
