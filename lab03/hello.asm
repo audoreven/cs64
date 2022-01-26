@@ -1,9 +1,7 @@
 # hello.asm
 # A "Hello World" program in MIPS Assembly for CS64
-#
-#  Data Area - allocate and initialize variables
+
 .data
-	# TODO: Write your string definitions here
 	prompt: .asciiz "Enter an integer: "
 
 #Text Area (i.e. instructions)
