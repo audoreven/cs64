@@ -15,14 +15,62 @@
 # Assembly (NON-RECURSIVE) code version of pow(x,n):
 #
 .data
+	prompt_x: .asciiz "Enter a number x:\n"
+	prompt_n: .asciiz "Enter the exponent n:\n"
+	power: .axciiz "Power(x,n) is:\n"
+    new_line: .asciiz "\n"
 
-	# TODO: Write your initializations here
-
-#Text Area (i.e. instructions)
 .text
 main:
-	
-	# TODO: Write your code here
+	# print prompt for x
+	li $v0, 4
+	la $a0, prompt_x
+	syscall	
+
+    # get x
+	li $v0, 5
+	syscall
+	move $t1, $v0
+
+    # print prompt for n
+	li $v0, 4
+	la $a0, prompt_n
+	syscall	
+
+    # get n
+	li $v0, 5
+	syscall
+	move $t2, $v0
+
+	# initialize t3 as 1
+	li $t3, 1
+
+pow:
+	# if n = 0, go to exit
+	beq $t2, $zero, exit
+	# multiply t3 by t1
+	mult $t3, $t1
+	mflo $t3
+	addi $t2, $t2, -1
+	j loop
+
 
 exit:
-	# TODO: Write code to properly exit a SPIM simulation
+	#print power 
+	li $v0, 4
+	la $a0, power
+	syscall	
+
+	# print whatever is in t3
+	li $v0, 1
+	move $a0, $t3
+	syscall
+    
+    # print new_line
+	li $v0, 4
+	la $a0, new_line
+	syscall	
+
+    # exit program
+	li $v0, 10
+	syscall

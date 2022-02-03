@@ -4,7 +4,7 @@
 
 .text
 main:
-        # get first int input
+    # get first int input
 	li $v0, 5
 	syscall
 	move $t1, $v0
@@ -28,6 +28,6 @@ main:
 	j exit
 	
 exit:
-        li $v0, 10
-        syscall
+	li $v0, 10
+	syscall
 
