@@ -76,9 +76,19 @@ exit:
 	la $a0, mid
 	syscall	
 
+    # print whatever is in t1
+	li $v0, 1
+	move $a0, $t1
+	syscall
+
     # print whatever is in t2
 	li $v0, 1
 	move $a0, $t2
+	syscall
+
+    # print whatever is in t3
+	li $v0, 1
+	move $a0, $t3
 	syscall
     
     # print new_line
