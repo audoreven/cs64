@@ -52,6 +52,23 @@ first_swap:
     move $t1, $t2
     move $t2, $t4
     
+
+    # print whatever is in t1
+	li $v0, 1
+	move $a0, $t1
+	syscall
+
+    # print whatever is in t2
+	li $v0, 1
+	move $a0, $t2
+	syscall
+
+    # print whatever is in t3
+	li $v0, 1
+	move $a0, $t3
+	syscall
+
+    
     # check for next swap
     blt $t3, $t2, second_swap
 
@@ -60,8 +77,26 @@ second_swap:
     move $t4, $t2
     move $t2, $t3
     move $t3, $t4
+
     
-    #check for next swap
+
+    # print whatever is in t1
+	li $v0, 1
+	move $a0, $t1
+	syscall
+
+    # print whatever is in t2
+	li $v0, 1
+	move $a0, $t2
+	syscall
+
+    # print whatever is in t3
+	li $v0, 1
+	move $a0, $t3
+	syscall
+
+    
+    # check for next swap
     blt $t2, $t1, third_swap
 
 third_swap:
@@ -69,6 +104,23 @@ third_swap:
     move $t4, $t1
     move $t1, $t2
     move $t2, $t4
+
+    
+
+    # print whatever is in t1
+	li $v0, 1
+	move $a0, $t1
+	syscall
+
+    # print whatever is in t2
+	li $v0, 1
+	move $a0, $t2
+	syscall
+
+    # print whatever is in t3
+	li $v0, 1
+	move $a0, $t3
+	syscall
 
 exit:
     # print mid
