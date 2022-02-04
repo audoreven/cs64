@@ -208,10 +208,14 @@ doSwap:
     # }
 
     # initialize for loop
-    li $t2, 0
-    li $t3, 4
-    li $t4, 44  # size of arrays
-    jal swap_loop
+    ; li $t2, 0
+    ; li $t3, 4
+    ; li $t4, 44  # size of arrays
+    ; jal swap_loop
+
+    lw $t5, 0($t0)
+    sw 0($t0), 4($t0)
+    sw 4($t0), $t5
 
     # do not remove this last line
     jr $ra
