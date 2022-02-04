@@ -197,21 +197,21 @@ doSwap:
     # Use only regs $v0-$v1, $t0-$t7, $a0-$a3.
     # You may assume nothing about their starting values.
     #
-    # unsigned int x = 0; 
-    # unsigned int y = 1; 
+    # unsigned int x = 0#
+    # unsigned int y = 1#
     # while (x < 11) { 
-    #     int temp = myArray[x]; 
-    #     myArray[x] = myArray[y]; 
-    #     myArray[y] = temp; 
-    #     x+=2; 
-    #     y+=2; 
+    #     int temp = myArray[x]#
+    #     myArray[x] = myArray[y]#
+    #     myArray[y] = temp#
+    #     x+=2#
+    #     y+=2#
     # }
 
     # initialize for loop
-    ; li $t2, 0
-    ; li $t3, 4
-    ; li $t4, 44  # size of arrays
-    ; jal swap_loop
+    # li $t2, 0
+    # li $t3, 4
+    # li $t4, 44  # size of arrays
+    # jal swap_loop
 
     lw $t5, 0($t0)
     lw $t4, 4($t0)
@@ -221,18 +221,18 @@ doSwap:
     # do not remove this last line
     jr $ra
 
-swap_loop:
-    # check if at end
-    blt $t4, $t2, exit_swap_loop
+# swap_loop:
+#    # check if at end
+#    blt $t4, $t2, exit_swap_loop
 
-    # perform swap 
-    lw $t5, $t2($t0)
-    sw $t2($t0), $t3($t0)
-    sw $t3($t0), $t5
+#    # perform swap 
+#    lw $t5, $t2($t0)
+#    sw $t2($t0), $t3($t0)
+#    sw $t3($t0), $t5
 
-    # increment t2 and t3
-    addi $t2, 8
-    addi $t3, 8
+#    # increment t2 and t3
+#    addi $t2, 8
+#    addi $t3, 8
 
-exit_swap_loop:
-    jr $ra
+# exit_swap_loop:
+#    jr $ra
