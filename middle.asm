@@ -38,12 +38,13 @@ main:
 	syscall
 	move $t3, $v0
 
-    # if first > second, swap
+    # first > second, swap
     blt $t2, $t1, first_swap
 
-    # if second > third, swap
+    # second > third, swap
     blt $t3, $t2, second_swap
 
+    # jump exit
     j exit
 
 first_swap:
@@ -51,26 +52,14 @@ first_swap:
     move $t4, $t1
     move $t1, $t2
     move $t2, $t4
-    
 
     # print whatever is in t1
 	li $v0, 1
 	move $a0, $t1
 	syscall
 
-    # print whatever is in t2
-	li $v0, 1
-	move $a0, $t2
-	syscall
-
-    # print whatever is in t3
-	li $v0, 1
-	move $a0, $t3
-	syscall
-
-    # check for next swap
+    # check for next swap, otherwise jump exit
     blt $t3, $t2, second_swap
-
     j exit
 
 second_swap:
@@ -78,28 +67,9 @@ second_swap:
     move $t4, $t2
     move $t2, $t3
     move $t3, $t4
-
     
-
-    # print whatever is in t1
-	li $v0, 1
-	move $a0, $t1
-	syscall
-
-    # print whatever is in t2
-	li $v0, 1
-	move $a0, $t2
-	syscall
-
-    # print whatever is in t3
-	li $v0, 1
-	move $a0, $t3
-	syscall
-
-    
-    # check for next swap
+    # check for next swap, otherwise jump exit
     blt $t2, $t1, third_swap
-
     j exit
 
 third_swap:
@@ -108,42 +78,15 @@ third_swap:
     move $t1, $t2
     move $t2, $t4
 
-    
-
-    # print whatever is in t1
-	li $v0, 1
-	move $a0, $t1
-	syscall
-
-    # print whatever is in t2
-	li $v0, 1
-	move $a0, $t2
-	syscall
-
-    # print whatever is in t3
-	li $v0, 1
-	move $a0, $t3
-	syscall
-
 exit:
     # print mid
 	li $v0, 4
 	la $a0, mid
 	syscall	
 
-    # print whatever is in t1
-	li $v0, 1
-	move $a0, $t1
-	syscall
-
     # print whatever is in t2
 	li $v0, 1
 	move $a0, $t2
-	syscall
-
-    # print whatever is in t3
-	li $v0, 1
-	move $a0, $t3
 	syscall
     
     # print new_line
