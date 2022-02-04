@@ -214,8 +214,9 @@ doSwap:
     ; jal swap_loop
 
     lw $t5, 0($t0)
-    sw 0($t0), 4($t0)
-    sw 4($t0), $t5
+    lw $t4, 4($t0)
+    sw $t4, 0($t0)
+    sw $t5, 4($t0)
 
     # do not remove this last line
     jr $ra
