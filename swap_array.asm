@@ -209,7 +209,7 @@ doSwap:
 
     # initialize loop
     la $t0, myArray
-    li $t1, myArray
+    la $t1, myArray
     li $t2, 0   # start
     li $t3, 44   # end
     addiu $t1, 4
