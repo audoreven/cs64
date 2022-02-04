@@ -68,9 +68,10 @@ first_swap:
 	move $a0, $t3
 	syscall
 
-    
     # check for next swap
     blt $t3, $t2, second_swap
+
+    j exit
 
 second_swap:
     # swap second and third
@@ -98,6 +99,8 @@ second_swap:
     
     # check for next swap
     blt $t2, $t1, third_swap
+
+    j exit
 
 third_swap:
     # swap first and second
