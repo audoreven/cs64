@@ -52,7 +52,7 @@ pow:
 	mult $t3, $t1
 	mflo $t3
 	addi $t2, $t2, -1
-	j loop
+	j pow
 
 
 exit:
