@@ -207,41 +207,22 @@ doSwap:
     #     y+=2; 
     # }
 
-    # first swap
-    lw $t5, 0($t0)
-    lw $t4, 4($t0)
-    sw $t4, 0($t0)
-    sw $t5, 4($t0)
+    # initialize loop
+    la $t0, myArray
+    li $t1, myArray
+    li $t2, 0   # start
+    li $t3, 44   # end
+    addiu $t1, 4
 
-    # second swap
-    lw $t5, 8($t0)
-    lw $t4, 12($t0)
-    sw $t4, 8($t0)
-    sw $t5, 12($t0)
-
-    # third swap
-    lw $t5, 16($t0)
-    lw $t4, 20($t0)
-    sw $t4, 16($t0)
-    sw $t5, 20($t0)
-
-    # fourth swap
-    lw $t5, 24($t0)
-    lw $t4, 28($t0)
-    sw $t4, 24($t0)
-    sw $t5, 28($t0)
-
-    # fifth swap
-    lw $t5, 32($t0)
-    lw $t4, 36($t0)
-    sw $t4, 32($t0)
-    sw $t5, 36($t0)
-
-    # last swap
-    lw $t5, 40($t0)
-    lw $t4, 44($t0)
-    sw $t4, 40($t0)
-    sw $t5, 44($t0)
+swap_loop:
+    lw $t4, 0($t0)
+    lw $t5, 0($t1)
+    sw $t5, 0($t0)
+    sw $t4, 0($t1)
+    addiu $t0, 8
+    addiu $t1, 8
+    addiu $t2, 8
+    blt $t2, $t3, swap_loop
 
     # do not remove this last line
     jr $ra
