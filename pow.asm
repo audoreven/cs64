@@ -17,7 +17,7 @@
 .data
 	prompt_x: .asciiz "Enter a number x:\n"
 	prompt_n: .asciiz "Enter the exponent n:\n"
-	power: .axciiz "Power(x,n) is:\n"
+	power: .asciiz "Power(x,n) is:\n"
     new_line: .asciiz "\n"
 
 .text

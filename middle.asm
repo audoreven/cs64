@@ -53,11 +53,6 @@ first_swap:
     move $t1, $t2
     move $t2, $t4
 
-    # print whatever is in t1
-	li $v0, 1
-	move $a0, $t1
-	syscall
-
     # check for next swap, otherwise jump exit
     blt $t3, $t2, second_swap
     j exit
