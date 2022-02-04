@@ -197,42 +197,51 @@ doSwap:
     # Use only regs $v0-$v1, $t0-$t7, $a0-$a3.
     # You may assume nothing about their starting values.
     #
-    # unsigned int x = 0#
-    # unsigned int y = 1#
+    # unsigned int x = 0; 
+    # unsigned int y = 1; 
     # while (x < 11) { 
-    #     int temp = myArray[x]#
-    #     myArray[x] = myArray[y]#
-    #     myArray[y] = temp#
-    #     x+=2#
-    #     y+=2#
+    #     int temp = myArray[x]; 
+    #     myArray[x] = myArray[y]; 
+    #     myArray[y] = temp; 
+    #     x+=2; 
+    #     y+=2; 
     # }
 
-    # initialize for loop
-    # li $t2, 0
-    # li $t3, 4
-    # li $t4, 44  # size of arrays
-    # jal swap_loop
-
+    # first swap
     lw $t5, 0($t0)
     lw $t4, 4($t0)
     sw $t4, 0($t0)
     sw $t5, 4($t0)
 
+    # second swap
+    lw $t5, 8($t0)
+    lw $t4, 12($t0)
+    sw $t4, 8($t0)
+    sw $t5, 12($t0)
+
+    # third swap
+    lw $t5, 16($t0)
+    lw $t4, 20($t0)
+    sw $t4, 16($t0)
+    sw $t5, 20($t0)
+
+    # fourth swap
+    lw $t5, 24($t0)
+    lw $t4, 28($t0)
+    sw $t4, 24($t0)
+    sw $t5, 28($t0)
+
+    # fifth swap
+    lw $t5, 32($t0)
+    lw $t4, 36($t0)
+    sw $t4, 32($t0)
+    sw $t5, 36($t0)
+
+    # last swap
+    lw $t5, 40($t0)
+    lw $t4, 44($t0)
+    sw $t4, 40($t0)
+    sw $t5, 44($t0)
+
     # do not remove this last line
     jr $ra
-
-# swap_loop:
-#    # check if at end
-#    blt $t4, $t2, exit_swap_loop
-
-#    # perform swap 
-#    lw $t5, $t2($t0)
-#    sw $t2($t0), $t3($t0)
-#    sw $t3($t0), $t5
-
-#    # increment t2 and t3
-#    addi $t2, 8
-#    addi $t3, 8
-
-# exit_swap_loop:
-#    jr $ra
