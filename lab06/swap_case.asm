@@ -111,13 +111,13 @@ Swap_Case:
 
         To_Upper:
             # print current:
-            move $a0 $t0
-            li $v0 11
+            move $a0, $t0
+            li $v0, 11
             syscall
 
             # print new line:
-            la $a0 newline
-            li $v0 4
+            la $a0, newline
+            li $v0, 4
             syscall
 
             addiu $t0, $t0, -32 # to upper
@@ -126,13 +126,13 @@ Swap_Case:
 
         To_Lower:
             # print current:
-            move $a0 $t0
-            li $v0 11
+            move $a0, $t0
+            li $v0, 11
             syscall
 
             # print new line:
-            la $a0 newline
-            li $v0 4
+            la $a0, newline
+            li $v0, 4
             syscall
 
             addiu $t0, $t0, 32 # to lower
@@ -140,28 +140,27 @@ Swap_Case:
             j Next
 
         Next:
-
             # print new letter:
-            move $a0 $t0
-            li $v0 11
+            move $a0, $t0
+            li $v0, 11
             syscall
 
             # print new line:
-            la $a0 newline
-            li $v0 4
+            la $a0, newline
+            li $v0, 4
             syscall
 
             # call convention check
-            addiu $sp $sp -4
-            sw $ra 0($sp)
+            addiu $sp, $sp, -4
+            sw $ra, 0($sp)
 
             jal ConventionCheck
 
-            lw $ra 0($sp)
-            addiu $sp $sp 4
+            lw $ra, 0($sp)
+            addiu $sp, $sp, 4
 
             # increment and go back to swap_case
-            addiu $s1 $s1 1
+            addiu $s0, $s0, 1
             j swap_loop
 
     # Do not remove this line
