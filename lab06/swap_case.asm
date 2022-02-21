@@ -143,6 +143,9 @@ Swap_Case:
             j end
 
         end:
+            # change character in string
+            sb $t0 0($s1)
+            
             # print new letter:
             move $a0, $t0
             li $v0, 11
