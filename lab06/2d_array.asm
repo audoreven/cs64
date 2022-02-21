@@ -219,6 +219,10 @@ sort_by_row:
             jal average_row
             move $t5, $v0
 
+            move $a0, $t5
+            li $v0, 1
+            syscall
+
             lw $t0, 0($sp)
             lw $t1, 4($sp)
             lw $t2, 8($sp)
