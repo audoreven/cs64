@@ -90,10 +90,10 @@ Swap_Case:
     # if lower, j to To_Upper
     # if null char, go to return
     # do -> move $t0, $ra before calling convention check
-    move $s0, $a0   # use s1 instead of a0
+    move $s1, $a0   # use s1 instead of a0
 
     swap_loop:
-        lb $t0, 0($s0)  # get current char
+        lb $t0, 0($s1)  # get current char
 
         li $t1, 65
         li $t2, 91
@@ -161,7 +161,7 @@ Swap_Case:
 
         Next:
             # increment and go back to swap_case
-            addiu $s0, $s0, 1
+            addiu $s1, $s1, 1
             j swap_loop
 
     # Do not remove this line
