@@ -185,7 +185,7 @@ sort_by_row:
     # bubble sort outer:
     loop_outer:
         addi $t3, $t1, 1
-        ble $t3, $a2, end_outer     # reached end of outer loop
+        bge $t3, $a2, end_outer     # reached end of outer loop
         li $t2 0    # reset inner loop
 
         # bubble sort inner:
