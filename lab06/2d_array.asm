@@ -174,6 +174,113 @@ swap_rows: #takes in the address of the rows you want to swap and swaps them.
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 sort_by_row: 
     # a0 stores the array address, a1 and a2 store the size of row and column respectively
+    addiu $sp, $sp, -12
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+    sw $s2, 8($sp)
+
+    move $t0, $a0
+    li $t1, 0   # outer
+    li $t2, 0   # inner
+    # bubble sort outer:
+    loop_outer:
+        ble $a2, $t1, end_outer     # reached end of outer loop
+        li $t2 0    # reset inner loop
+
+        # bubble sort inner:
+        loop_inner:
+            add $t3, $t1, $t2
+            addi $t3, $t3, 1
+            bge $t3, $a1, end_inner  # reached end of inner loop
+
+            # getting address of row at j, and putting in s1
+            mult $a2, $t2
+            mflo $s1
+
+            li $t4, 4
+            mult $s1, $t4
+            mflo $s1
+
+            add $s1, $s1, $s0
+
+            # preparing to call row avg for row at j
+            addiu $sp, $sp, -16
+            sw $t0, 0($sp)
+            sw $t1, 4($sp)
+            sw $t2, 8($sp)
+            sw $ra, 12($sp)
+            
+            move $a0 $s1
+            jal average_row
+            move $t5 $v0
+
+            lw $t0, 0($sp)
+            lw $t1, 4($sp)
+            lw $t2, 8($sp)
+            lw $ra, 12($sp)
+            addiu $sp, $sp, 16
+
+            # getting address of row at j+1, and putting in s2
+            addi $t2, 1
+            mult $a2, $t2
+            mflo $s2
+            addi $t2, -1
+
+            mult $s2, $t4
+            mflo $s2
+
+            add $s2, $s2, $s0
+
+            # preparing to call row avg for row at j+1
+            addiu $sp, $sp, -16
+            sw $t0, 0($sp)
+            sw $t1, 4($sp)
+            sw $t2, 8($sp)
+            sw $ra, 12($sp)
+            
+            move $a0, $s2
+            jal average_row
+            move $t6, $v0
+
+            lw $t0, 0($sp)
+            lw $t1, 4($sp)
+            lw $t2, 8($sp)
+            lw $ra, 12($sp)
+            addiu $sp, $sp, 16
+
+            # if avg of j > j+1, swap otherwise no swap
+            blt $t6, $t5, call_swap 
+
+            call_swap:
+                addiu $sp, $sp, -16
+                sw $t0, 0($sp)
+                sw $t1, 4($sp)
+                sw $t2, 8($sp)
+                sw $ra, 12($sp)
+
+                move $a0 $s1
+                move $a1 $s2
+
+                jal swap_rows
+
+                lw $t0, 0($sp)
+                lw $t1, 4($sp)
+                lw $t2, 8($sp)
+                lw $ra, 12($sp)
+                addiu $sp, $sp, 16
+
+            addi $t2, 1     # increment loop
+            j loop_inner
+        end_inner:
+            addi $t1, 1
+            j loop_outer
+    end_outer:
 
     # Do not remove this line
+    return:
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lw $s2, 8($sp)
+    addiu $sp, $sp, 12
+
     jr $ra

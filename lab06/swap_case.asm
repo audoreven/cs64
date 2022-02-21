@@ -104,15 +104,15 @@ Swap_Case:
         li $t4, 123
 
         # check if current char is null, if it is, just return
-        beq $t0, $zero, Return
+        beq $t0, $zero, return
 
-        blt $t0, $t1, Next
-        blt $t0, $t2, To_Lower # in between 65 and 90, is upper case
-        blt $t0, $t3, Next
-        ble $t0, $t4, To_Upper # in between 97 and 123, is lower case
-        j Next
+        blt $t0, $t1, go_next
+        blt $t0, $t2, to_lower # in between 65 and 90, is upper case
+        blt $t0, $t3, go_next
+        ble $t0, $t4, to_upper # in between 97 and 123, is lower case
+        j go_next
 
-        To_Upper:
+        to_upper:
             # print current:
             move $a0, $t0
             li $v0, 11
@@ -125,9 +125,9 @@ Swap_Case:
 
             addiu $t0, $t0, -32 # to upper
 
-            j End
+            j end
 
-        To_Lower:
+        to_lower:
             # print current:
             move $a0, $t0
             li $v0, 11
@@ -140,9 +140,9 @@ Swap_Case:
 
             addiu $t0, $t0, 32 # to lower
 
-            j End
+            j end
 
-        End:
+        end:
             # print new letter:
             move $a0, $t0
             li $v0, 11
@@ -162,13 +162,14 @@ Swap_Case:
             lw $ra, 0($sp)
             addiu $sp, $sp, 4
 
-        Next:
+        go_next:
             # increment and go back to swap_case
             addiu $s1, $s1, 1
             j swap_loop
 
-    # Do not remove this line
-    Return: 
+    return: 
     lw $s1, 0($sp)
     addiu $sp, $sp, -4
+
+    # Do not remove this line
     jr $ra
