@@ -1,3 +1,4 @@
+# HW BUDDY: David Wang
 .data 
     array: 
             .word 1, 2, 9

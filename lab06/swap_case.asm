@@ -1,3 +1,4 @@
+# HW BUDDY: David Wang
 # Data Area
 .data
     buffer: .space 100
@@ -87,33 +88,90 @@ Swap_Case:
     # if not letter j to Next
     # if upper, j to To_Lower
     # if lower, j to To_Upper
+    # if null char, go to return
     # do -> move $t0, $ra before calling convention check
-    li $t1, 65
-    li $t2, 90
-    li $t3, 97
-    li $t4, 122
+    move $s0, $a0   # use s1 instead of a0
 
-    bgt $t1, 0($a0), Next
-    ble $t1, 0($a0), second_check
+    swap_loop:
+        lb $t0, 0($s0)  # get current char
 
-    second_check:
-        bge $t2, 0($a0), To_Lower
-    
-    blt $t3, 0($a0), Next
-    ble $t4, 0($a0), To_Upper
-    j Next
+        li $t1, 65
+        li $t2, 91
+        li $t3, 97
+        li $t4, 123
 
-    To_Upper:
+        # check if current char is null, if it is, just return
+        beq $t0, $zero, Return
 
+        blt $t0, $t1, Next
+        blt $t0, $t2, To_Lower # in between 65 and 90, is upper case
+        blt $t0, $t3, Next
+        ble $t0, $t4, To_Upper # in between 97 and 123, is lower case
         j Next
 
-    To_Lower:
+        To_Upper:
+            # print current:
+            move $a0 $t0
+            li $v0 11
+            syscall
 
-        j Next
+            # print new line:
+            la $a0 newline
+            li $v0 4
+            syscall
 
-    Next:
-        # increment and go back to swap_case
+            addiu $t0, $t0, -32 # to upper
 
+            # print new letter:
+            move $a0 $t0
+            li $v0 11
+            syscall
+
+            # print new line:
+            la $a0 newline
+            li $v0 4
+            syscall
+            
+            j Next
+
+        To_Lower:
+            # print current:
+            move $a0 $t0
+            li $v0 11
+            syscall
+
+            # print new line:
+            la $a0 newline
+            li $v0 4
+            syscall
+
+            addiu $t0, $t0, 32 # to lower
+
+            # print new letter:
+            move $a0 $t0
+            li $v0 11
+            syscall
+
+            # print new line:
+            la $a0 newline
+            li $v0 4
+            syscall
+
+            j Next
+
+        Next:
+            # call convention check
+            addiu $sp $sp -4
+            sw $ra 0($sp)
+
+            jal ConventionCheck
+
+            lw $ra 0($sp)
+            addiu $sp $sp 4
+
+            # increment and go back to swap_case
+            addiu $s1 $s1 1
+            j swap_loop
 
     # Do not remove this line
     Return: 
