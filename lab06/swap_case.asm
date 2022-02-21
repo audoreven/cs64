@@ -93,19 +93,18 @@ Swap_Case:
     li $t3, 97
     li $t4, 122
 
-    bgt $t1, 0($a0), j Next
-    ble $t1, 0($a0), j second_check
+    bgt $t1, 0($a0), Next
+    ble $t1, 0($a0), second_check
 
     second_check:
-        bge $t2, 0($a0), j To_Lower
+        bge $t2, 0($a0), To_Lower
     
-    blt $t3, 0($a0), j Next
-    ble $t4, 0($a0), j To_Upper
+    blt $t3, 0($a0), Next
+    ble $t4, 0($a0), To_Upper
     j Next
 
     To_Upper:
-        li $v0, 4
-        syscall
+
         j Next
 
     To_Lower:
