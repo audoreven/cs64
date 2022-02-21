@@ -184,7 +184,8 @@ sort_by_row:
     li $t2, 0   # inner
     # bubble sort outer:
     loop_outer:
-        ble $a2, $t1, end_outer     # reached end of outer loop
+        addi $t3, $t1, 1
+        ble $t3, $a2, end_outer     # reached end of outer loop
         li $t2 0    # reset inner loop
 
         # bubble sort inner:
@@ -224,9 +225,6 @@ sort_by_row:
             move $a0, $s1
             jal average_row
             move $t5, $v0
-            move  $a0, $t5
-            li $v0, 1
-            syscall
 
             move $a0, $s2
             jal average_row
