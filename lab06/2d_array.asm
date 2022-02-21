@@ -208,25 +208,6 @@ sort_by_row:
 
             add $s4, $s4, $s0
 
-            # preparing to call row avg for row at j
-            addiu $sp, $sp, -16
-            sw $t0, 0($sp)
-            sw $t1, 4($sp)
-            sw $t2, 8($sp)
-            sw $ra, 12($sp)
-            
-            move $a0, $s4
-            jal average_row
-            move  $a0, $v0
-            li $v0, 1
-            syscall
-
-            lw $t0, 0($sp)
-            lw $t1, 4($sp)
-            lw $t2, 8($sp)
-            lw $ra, 12($sp)
-            addiu $sp, $sp, 16
-
             # getting address of row at j+1, and putting in s5
             addi $t2, 1
             mult $s2, $t2
@@ -238,7 +219,7 @@ sort_by_row:
 
             add $s5, $s5, $s0
 
-            # preparing to call row avg for row at j+1
+            # preparing to call row avg for row at j and j+1
             addiu $sp, $sp, -16
             sw $t0, 0($sp)
             sw $t1, 4($sp)
@@ -246,6 +227,13 @@ sort_by_row:
             sw $ra, 12($sp)
             
             move $a0, $s4
+            jal average_row
+            move $t5, $v0
+            move  $a0, $t5
+            li $v0, 1
+            syscall
+
+            move $a0, $s5
             jal average_row
             move $t6, $v0
 
