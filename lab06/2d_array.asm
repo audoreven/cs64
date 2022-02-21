@@ -217,9 +217,7 @@ sort_by_row:
             
             move $a0, $s4
             jal average_row
-            move $t5, $v0
-
-            move $a0, $t5
+            move  $a0, $v0
             li $v0, 1
             syscall
 
