@@ -215,9 +215,9 @@ sort_by_row:
             sw $t2, 8($sp)
             sw $ra, 12($sp)
             
-            move $a0 $s4
+            move $a0, $s4
             jal average_row
-            move $t5 $v0
+            move $t5, $v0
 
             lw $t0, 0($sp)
             lw $t1, 4($sp)
@@ -253,27 +253,27 @@ sort_by_row:
             lw $ra, 12($sp)
             addiu $sp, $sp, 16
 
-            # if avg of j > j+1, swap otherwise no swap
-            blt $t6, $t5, call_swap 
+            # if avg of j <= j+1, no swap otherwise swap
+            ble $t5, $t6, next 
 
-            call_swap:
-                addiu $sp, $sp, -16
-                sw $t0, 0($sp)
-                sw $t1, 4($sp)
-                sw $t2, 8($sp)
-                sw $ra, 12($sp)
+            addiu $sp, $sp, -16
+            sw $t0, 0($sp)
+            sw $t1, 4($sp)
+            sw $t2, 8($sp)
+            sw $ra, 12($sp)
 
-                move $a0 $s4
-                move $a1 $s5
+            move $a0, $s4
+            move $a1, $s5
 
-                jal swap_rows
+            jal swap_rows
 
-                lw $t0, 0($sp)
-                lw $t1, 4($sp)
-                lw $t2, 8($sp)
-                lw $ra, 12($sp)
-                addiu $sp, $sp, 16
+            lw $t0, 0($sp)
+            lw $t1, 4($sp)
+            lw $t2, 8($sp)
+            lw $ra, 12($sp)
+            addiu $sp, $sp, 16
 
+            next:
             addi $t2, 1     # increment loop
             j loop_inner
         end_inner:
