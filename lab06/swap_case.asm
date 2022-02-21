@@ -122,7 +122,7 @@ Swap_Case:
 
             addiu $t0, $t0, -32 # to upper
 
-            j Next
+            j End
 
         To_Lower:
             # print current:
@@ -137,9 +137,9 @@ Swap_Case:
 
             addiu $t0, $t0, 32 # to lower
 
-            j Next
+            j End
 
-        Next:
+        End:
             # print new letter:
             move $a0, $t0
             li $v0, 11
@@ -159,6 +159,7 @@ Swap_Case:
             lw $ra, 0($sp)
             addiu $sp, $sp, 4
 
+        Next:
             # increment and go back to swap_case
             addiu $s0, $s0, 1
             j swap_loop
