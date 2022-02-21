@@ -122,16 +122,6 @@ Swap_Case:
 
             addiu $t0, $t0, -32 # to upper
 
-            # print new letter:
-            move $a0 $t0
-            li $v0 11
-            syscall
-
-            # print new line:
-            la $a0 newline
-            li $v0 4
-            syscall
-            
             j Next
 
         To_Lower:
@@ -147,6 +137,10 @@ Swap_Case:
 
             addiu $t0, $t0, 32 # to lower
 
+            j Next
+
+        Next:
+
             # print new letter:
             move $a0 $t0
             li $v0 11
@@ -157,9 +151,6 @@ Swap_Case:
             li $v0 4
             syscall
 
-            j Next
-
-        Next:
             # call convention check
             addiu $sp $sp -4
             sw $ra 0($sp)
