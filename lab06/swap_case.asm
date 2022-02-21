@@ -82,7 +82,40 @@ Exit:
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 
 Swap_Case:
-    #TODO: write your code here, $a0 stores the address of the string
+    # TODO: write your code here, $a0 stores the address of the string
+    # if string ends, j to Return
+    # if not letter j to Next
+    # if upper, j to To_Lower
+    # if lower, j to To_Upper
+    # do -> move $t0, $ra before calling convention check
+    li $t1, 65
+    li $t2, 90
+    li $t3, 97
+    li $t4, 122
+
+    bgt $t1, 0($a0), j Next
+    ble $t1, 0($a0), j second_check
+
+    second_check:
+        bge $t2, 0($a0), j To_Lower
     
+    blt $t3, 0($a0), j Next
+    ble $t4, 0($a0), j To_Upper
+    j Next
+
+    To_Upper:
+        li $v0, 4
+        syscall
+        j Next
+
+    To_Lower:
+
+        j Next
+
+    Next:
+        # increment and go back to swap_case
+
+
     # Do not remove this line
+    Return: 
     jr $ra
