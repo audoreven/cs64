@@ -174,7 +174,7 @@ swap_rows: #takes in the address of the rows you want to swap and swaps them.
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 sort_by_row: 
     # a0 stores the array address, a1 and a2 store the size of row and column respectively
-    addiu $sp, $sp, -20
+    addiu $sp, $sp, -12
     sw $s0, 0($sp)
     sw $s1, 4($sp)
     sw $s2, 8($sp)
@@ -193,7 +193,7 @@ sort_by_row:
             addi $t3, $t3, 1
             bge $t3, $a1, end_inner  # reached end of inner loop
 
-            # getting address of row at j, and putting in s4
+            # getting address of row at j, and putting in s1
             mult $a2, $t2
             mflo $s1
 
@@ -203,7 +203,7 @@ sort_by_row:
 
             add $s1, $s1, $s0
 
-            # getting address of row at j+1, and putting in s5
+            # getting address of row at j+1, and putting in s2
             addi $t2, 1
             mult $a2, $t2
             mflo $s2
@@ -271,6 +271,6 @@ sort_by_row:
     lw $s0, 0($sp)
     lw $s1, 4($sp)
     lw $s2, 8($sp)
-    addiu $sp, $sp, 20
+    addiu $sp, $sp, 12
 
     jr $ra
