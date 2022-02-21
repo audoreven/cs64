@@ -90,6 +90,9 @@ Swap_Case:
     # if lower, j to To_Upper
     # if null char, go to return
     # do -> move $t0, $ra before calling convention check
+    addiu $sp, $sp, 4
+    sw $s1, 0($sp)
+
     move $s1, $a0   # use s1 instead of a0
 
     swap_loop:
@@ -166,4 +169,6 @@ Swap_Case:
 
     # Do not remove this line
     Return: 
+    lw $s1, 0($sp)
+    addiu $sp, $sp, -4
     jr $ra
