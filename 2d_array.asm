@@ -178,8 +178,8 @@ sort_by_row:
     sw $s0, 0($sp)
     sw $s1, 4($sp)
     sw $s2, 8($sp)
-    sw $s3, 12($sp)
-    sw $s4, 16($sp)
+    sw $s4, 12($sp)
+    sw $s5, 16($sp)
     
     move $s0, $a0
     move $s1, $a1
@@ -200,30 +200,8 @@ sort_by_row:
             addi $t3, $t3, 1
             bge $t3, $s1, end_inner  # reached end of inner loop
 
-            # getting address of row at j, and putting in s3
-            move $s3, $t2
-
-            mult $s2, $s3
-            mflo $s3
-
-            li $t4, 4
-            mult $s3, $t4
-            mflo $s3
-
-            add $s3, $s3, $s0
-
-
-            ; li     $v0, 1
-            ; move      $a0, $s3
-            ; syscall
-            ; li     $v0, 4
-            ; la      $a0, newline
-            ; syscall
-
-            # getting address of row at j+1, and putting in s4
-            addi $t2, 1
+            # getting address of row at j, and putting in s4
             move $s4, $t2
-            addi $t2, -1
 
             mult $s2, $s4
             mflo $s4
@@ -234,6 +212,20 @@ sort_by_row:
 
             add $s4, $s4, $s0
 
+            # getting address of row at j+1, and putting in s5
+            addi $t2, 1
+            move $s5, $t2
+            addi $t2, -1
+
+            mult $s2, $s5
+            mflo $s5
+
+            li $t4, 4
+            mult $s5, $t4
+            mflo $s5
+
+            add $s5, $s5, $s0
+
             # preparing to call row avg for row at j and j+1
             addiu $sp, $sp, -16
             sw $t0, 0($sp)
@@ -241,11 +233,11 @@ sort_by_row:
             sw $t2, 8($sp)
             sw $ra, 12($sp)
             
-            move $a0, $s3
+            move $a0, $s4
             jal average_row
             move $t5, $v0
 
-            move $a0, $s4
+            move $a0, $s5
             jal average_row
             move $t6, $v0
 
@@ -301,8 +293,8 @@ sort_by_row:
     lw $s0, 0($sp)
     lw $s1, 4($sp)
     lw $s2, 8($sp)
-    lw $s3, 12($sp)
-    lw $s4, 16($sp)
+    lw $s4, 12($sp)
+    lw $s5, 16($sp)
     addiu $sp, $sp, 20
 
     jr $ra
