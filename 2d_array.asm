@@ -201,9 +201,7 @@ sort_by_row:
             bge $t3, $s1, end_inner  # reached end of inner loop
 
             # getting address of row at j, and putting in s3
-            move $s3, $t2
-
-            mult $s2, $s3
+            mult $s2, $t2 
             mflo $s3
 
             li $t4, 4
@@ -214,13 +212,10 @@ sort_by_row:
 
             # getting address of row at j+1, and putting in s4
             addi $t2, 1
-            move $s4, $t2
+            mult $s2, $s2
+            mflo $s4
             addi $t2, -1
 
-            mult $s2, $s4
-            mflo $s4
-
-            li $t4, 4
             mult $s4, $t4
             mflo $s4
 
