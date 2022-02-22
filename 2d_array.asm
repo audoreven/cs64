@@ -145,6 +145,13 @@ swap_rows: #takes in the address of the rows you want to swap and swaps them.
 
     li $s3, 0 # counter 
 
+    li     $v0, 1
+    move      $a0, $s0
+    syscall
+    li     $v0, 4
+    la      $a0, newline
+    syscall
+
     swap_iterate: 
         sll $t0, $s3, 2 
         add $t1, $t0, $s0 
