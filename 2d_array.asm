@@ -213,20 +213,20 @@ sort_by_row:
             add $s3, $s3, $s0
 
 
-            li     $v0, 1
-            move      $a0, $s3
-            syscall
-            li     $v0, 4
-            la      $a0, newline
-            syscall
+            ; li     $v0, 1
+            ; move      $a0, $s3
+            ; syscall
+            ; li     $v0, 4
+            ; la      $a0, newline
+            ; syscall
 
             # getting address of row at j+1, and putting in s4
             move $s4, $t2
 
-            addi $t2, 1
+            addiu $t2, 1
             mult $s2, $s4
             mflo $s4
-            addi $t2, -1
+            addiu $t2, -1
 
             li $t4, 4
             mult $s4, $t4
