@@ -174,12 +174,18 @@ swap_rows: #takes in the address of the rows you want to swap and swaps them.
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 sort_by_row: 
     # a0 stores the array address, a1 and a2 store the size of row and column respectively
-    addiu $sp, $sp, -12
+    addiu $sp, $sp, -20
     sw $s0, 0($sp)
     sw $s1, 4($sp)
     sw $s2, 8($sp)
+    sw $s3, 12($sp)
+    sw $s4, 16($sp)
+    
+    move $s0, $a0
+    move $s1, $a1
+    move $s2, $a2
 
-    move $t0, $a0
+    move $t0, $s0
     li $t1, 0   # outer
     li $t2, 0   # inner
     # bubble sort outer:
@@ -194,26 +200,26 @@ sort_by_row:
             addi $t3, $t3, 1
             bge $t3, $a1, end_inner  # reached end of inner loop
 
-            # getting address of row at j, and putting in s1
-            mult $a2, $t2
-            mflo $s1
+            # getting address of row at j, and putting in s3
+            mult $s2, $t2
+            mflo $s3
 
             li $t4, 4
-            mult $s1, $t4
-            mflo $s1
+            mult $s3, $t4
+            mflo $s3
 
-            add $s1, $s1, $s0
+            add $s3, $s3, $s0
 
-            # getting address of row at j+1, and putting in s2
+            # getting address of row at j+1, and putting in s4
             addi $t2, 1
             mult $a2, $t2
-            mflo $s2
+            mflo $s4
             addi $t2, -1
 
-            mult $s2, $t4
-            mflo $s2
+            mult $s4, $t4
+            mflo $s4
 
-            add $s2, $s2, $s0
+            add $s4, $s4, $s0
 
             # preparing to call row avg for row at j and j+1
             addiu $sp, $sp, -16
@@ -222,11 +228,11 @@ sort_by_row:
             sw $t2, 8($sp)
             sw $ra, 12($sp)
             
-            move $a0, $s1
+            move $a0, $s3
             jal average_row
             move $t5, $v0
 
-            move $a0, $s2
+            move $a0, $s4
             jal average_row
             move $t6, $v0
 
@@ -269,6 +275,8 @@ sort_by_row:
     lw $s0, 0($sp)
     lw $s1, 4($sp)
     lw $s2, 8($sp)
-    addiu $sp, $sp, 12
+    lw $s3, 12($sp)
+    lw $s4, 16($sp)
+    addiu $sp, $sp, 20
 
     jr $ra
