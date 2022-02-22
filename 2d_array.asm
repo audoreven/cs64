@@ -216,6 +216,9 @@ sort_by_row:
             li     $v0, 1
             move      $a0, $s3
             syscall
+            li     $v0, 4
+            la      $a0, newline
+            syscall
 
             # getting address of row at j+1, and putting in s4
             move $s4, $t2
