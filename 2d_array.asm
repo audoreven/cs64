@@ -191,7 +191,7 @@ sort_by_row:
     # bubble sort outer:
     loop_outer:
         addi $t3, $t1, 1
-        bge $t3, $a2, end_outer     # reached end of outer loop
+        bge $t3, $s2, end_outer     # reached end of outer loop
         li $t2 0    # reset inner loop
 
         # bubble sort inner:
@@ -212,7 +212,7 @@ sort_by_row:
 
             # getting address of row at j+1, and putting in s4
             addi $t2, 1
-            mult $a2, $t2
+            mult $s2, $t2
             mflo $s4
             addi $t2, -1
 
