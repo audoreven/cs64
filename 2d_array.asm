@@ -254,19 +254,6 @@ sort_by_row:
             lw $ra, 12($sp)
             addiu $sp, $sp, 16
 
-            li     $v0, 1
-            move      $a0, $t5
-            syscall
-            li     $v0, 4
-            la      $a0, newline
-            syscall
-            li     $v0, 1
-            move      $a0, $t6
-            syscall
-            li     $v0, 4
-            la      $a0, newline
-            syscall
-
             # if avg of j <= j+1, no swap otherwise swap
             ble $t5, $t6, next 
 
@@ -276,8 +263,8 @@ sort_by_row:
             sw $t2, 8($sp)
             sw $ra, 12($sp)
 
-            move $a0, $s1
-            move $a1, $s2
+            move $a0, $s4
+            move $a1, $s5
 
             jal swap_rows
 
