@@ -212,6 +212,11 @@ sort_by_row:
 
             add $s3, $s3, $s0
 
+
+            li     $v0, 1
+            move      $a0, $s3
+            syscall
+
             # getting address of row at j+1, and putting in s4
             move $s4, $t2
 
