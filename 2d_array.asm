@@ -160,7 +160,7 @@ swap_rows: #takes in the address of the rows you want to swap and swaps them.
         addi $s3, $s3, 1
         blt $s3, $s2, swap_iterate 
 
-    # jal ConventionCheck
+    jal ConventionCheck
 
     lw $s0, 0($sp) 
     lw $s1, 4($sp) 
