@@ -220,6 +220,7 @@ sort_by_row:
             mflo $s4
             addi $t2, -1
 
+            li $t4, 4
             mult $s4, $t4
             mflo $s4
 
