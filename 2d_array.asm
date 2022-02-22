@@ -221,12 +221,12 @@ sort_by_row:
             ; syscall
 
             # getting address of row at j+1, and putting in s4
+            addi $t2, 1
             move $s4, $t2
+            addi $t2, -1
 
-            addiu $t2, 1
             mult $s2, $s4
             mflo $s4
-            addiu $t2, -1
 
             li $t4, 4
             mult $s4, $t4
@@ -269,7 +269,7 @@ sort_by_row:
             syscall
 
             # if avg of j <= j+1, no swap otherwise swap
-            blt $t5, $t6, next 
+            ble $t5, $t6, next 
 
             addiu $sp, $sp, -16
             sw $t0, 0($sp)
