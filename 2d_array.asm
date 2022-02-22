@@ -212,11 +212,10 @@ sort_by_row:
 
             # getting address of row at j+1, and putting in s4
             addi $t2, 1
-            mult $s2, $s2
+            mult $s2, $t2
             mflo $s4
             addi $t2, -1
-
-            li $t4, 4
+            
             mult $s4, $t4
             mflo $s4
 
