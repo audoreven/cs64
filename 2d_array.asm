@@ -198,10 +198,12 @@ sort_by_row:
         loop_inner:
             add $t3, $t1, $t2
             addi $t3, $t3, 1
-            bge $t3, $a1, end_inner  # reached end of inner loop
+            bge $t3, $s1, end_inner  # reached end of inner loop
 
             # getting address of row at j, and putting in s3
-            mult $s2, $t2
+            move $s3, $t2
+
+            mult $s2, $s3
             mflo $s3
 
             li $t4, 4
@@ -211,8 +213,10 @@ sort_by_row:
             add $s3, $s3, $s0
 
             # getting address of row at j+1, and putting in s4
+            move $s4, $t2
+
             addi $t2, 1
-            mult $s2, $t2
+            mult $s2, $s4
             mflo $s4
             addi $t2, -1
 
