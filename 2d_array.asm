@@ -260,7 +260,8 @@ sort_by_row:
             syscall
             li     $v0, 4
             la      $a0, newline
-            syscallli     $v0, 1
+            syscall
+            li     $v0, 1
             move      $a0, $t6
             syscall
             li     $v0, 4
