@@ -269,7 +269,7 @@ sort_by_row:
             syscall
 
             # if avg of j <= j+1, no swap otherwise swap
-            ble $t5, $t6, next 
+            blt $t5, $t6, next 
 
             addiu $sp, $sp, -16
             sw $t0, 0($sp)
