@@ -174,142 +174,114 @@ swap_rows: #takes in the address of the rows you want to swap and swaps them.
 # COPYFROMHERE - DO NOT REMOVE THIS LINE
 sort_by_row: 
     # a0 stores the array address, a1 and a2 store the size of row and column respectively
-
-    addiu $sp $sp -20
-    sw $s0 0($sp)
-    sw $s1 4($sp)
-    sw $s2 8($sp)
-    sw $s4 12($sp)
-    sw $s5 16($sp)
-
-    move $s0 $a0
-    move $s1 $a1
-    move $s2 $a2
-
-
+    addiu $sp, $sp, -20
+    sw $s0, 0($sp)
+    sw $s1, 4($sp)
+    sw $s2, 8($sp)
+    sw $s3, 12($sp)
+    sw $s4, 16($sp)
     
-    move $t0 $s0 #address of array
-    li $t1 0 #i
-    li $t2 0 #j
-    bubble_loop_i:
-        #t3 will be used as a filler variable by convention
-        addi $t3 $t1 1
-        bge $t3 $s1 i_exit
-        li $t2 0
+    move $s0, $a0
+    move $s1, $a1
+    move $s2, $a2
 
+    move $t0, $s0
+    li $t1, 0   # outer
+    li $t2, 0   # inner
+    # bubble sort outer:
+    loop_outer:
+        addi $t3, $t1, 1
+        bge $t3, $s2, end_outer     # reached end of outer loop
+        li $t2 0    # reset inner loop
 
-        bubble_loop_j:
-            add $t3 $t1 $t2
-            addi $t3 $t3 1
-            #if (j + i + 1 >= column_height) then exit j_loop
-            bge $t3 $s1 j_exit\
+        # bubble sort inner:
+        loop_inner:
+            add $t3, $t1, $t2
+            addi $t3, $t3, 1
+            bge $t3, $a1, end_inner  # reached end of inner loop
 
-            #let $s4 = address(j), $s5 = address(j + 1)
+            # getting address of row at j, and putting in s3
 
-            #$s4 = j
-            move $s4 $t2
+            move $s3, $t2
 
-            #$s4 = $s4 * column_size
-            mult $s4 $s2
+            mult $s2, $s3
+            mflo $s3
+
+            li $t4, 4
+            mult $s3, $t4
+            mflo $s3
+
+            add $s3, $s3, $s0
+
+            # getting address of row at j+1, and putting in s4
+            move $s4, $t2
+
+            addi $t2, 1
+            mult $s2, $s4
+            mflo $s4
+            addi $t2, -1
+
+            mult $s4, $t4
             mflo $s4
 
-            #$s4 = $s4 * 4
-            li $t3 4
-            mult $s4 $t3
-            mflo $s4
+            add $s4, $s4, $s0
 
-            #$s4 = $s4 + array_address
-            add $s4 $s4 $s0
-
-            #$s5 = j + 1
-            addi $t3 $t2 1
-            move $s5 $t3
-
-            #$s5 = $s5 * column_size
-            mult $s5 $s2
-            mflo $s5
-
-            #$s5 = $s5 * 4
-            li $t3 4
-            mult $s5 $t3
-            mflo $s5
-
-            #$s5 = $s5 + array_address
-            add $s5 $s5 $s0
-
-            #let $t6 = avg (j), $t7 = avg (j + 1)
-
-            addiu $sp $sp -16
-            sw $t0 0($sp)
-            sw $t1 4($sp)
-            sw $t2 8($sp)
-            sw $ra 12($sp)
+            # preparing to call row avg for row at j and j+1
+            addiu $sp, $sp, -16
+            sw $t0, 0($sp)
+            sw $t1, 4($sp)
+            sw $t2, 8($sp)
+            sw $ra, 12($sp)
             
-            
-
-            move $a0 $s4
+            move $a0, $s3
             jal average_row
-            move $t6 $v0
+            move $t5, $v0
 
-
-            addiu $sp $sp -4
-            sw $t6 0($sp)
-
-            move $a0 $s5
+            move $a0, $s4
             jal average_row
-            move $t7 $v0
+            move $t6, $v0
 
-            lw $t6 0($sp)
-            addiu $sp $sp 4
+            lw $t0, 0($sp)
+            lw $t1, 4($sp)
+            lw $t2, 8($sp)
+            lw $ra, 12($sp)
+            addiu $sp, $sp, 16
 
-            lw $t0 0($sp)
-            lw $t1 4($sp)
-            lw $t2 8($sp)
-            lw $ra 12($sp)
-            addiu $sp $sp 16
+            # if avg of j <= j+1, no swap otherwise swap
+            ble $t5, $t6, next 
 
-            #if (avg(j) <= avg (j + 1), dont swap and go to end
-            ble $t6 $t7 bubble_loop_j_end
+            addiu $sp, $sp, -16
+            sw $t0, 0($sp)
+            sw $t1, 4($sp)
+            sw $t2, 8($sp)
+            sw $ra, 12($sp)
 
-            addiu $sp $sp -16
-            sw $t0 0($sp)
-            sw $t1 4($sp)
-            sw $t2 8($sp)
-            sw $ra 12($sp)
-
-
-            move $a0 $s4
-            move $a1 $s5
-
-            
+            move $a0, $s1
+            move $a1, $s2
 
             jal swap_rows
 
-            lw $t0 0($sp)
-            lw $t1 4($sp)
-            lw $t2 8($sp)
-            lw $ra 12($sp)
-            addiu $sp $sp 16
+            lw $t0, 0($sp)
+            lw $t1, 4($sp)
+            lw $t2, 8($sp)
+            lw $ra, 12($sp)
+            addiu $sp, $sp, 16
 
-
-            # #get addresses for each row and call swap
-
-            bubble_loop_j_end:
-                
-                addi $t2 $t2 1
-                j bubble_loop_j
-        j_exit:
-        addi $t1 $t1 1
-        j bubble_loop_i
-    i_exit:
-    
+            next:
+            addi $t2, 1     # increment loop
+            j loop_inner
+        end_inner:
+            addi $t1, 1
+            j loop_outer
+    end_outer:
 
     # Do not remove this line
-    sort_by_row_exit:
-        lw $s0 0($sp)
-        lw $s1 4($sp)
-        lw $s2 8($sp)
-        lw $s4 12($sp)
-        lw $s5 16($sp)
-        addiu $sp $sp 20
-        jr $ra
+    return:
+    lw $s0, 0($sp)
+    lw $s1, 4($sp)
+    lw $s2, 8($sp)
+    lw $s3, 12($sp)
+    lw $s4, 16($sp)
+    addiu $sp, $sp, 20
+
+    jr $ra
